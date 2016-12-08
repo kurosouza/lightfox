@@ -8,9 +8,14 @@ const auth = require('feathers-authentication');
 const local = require('feathers-authentication-local');
 const jwt = require('feathers-authentication-jwt');
 const bodyParser = require('body-parser');
-const service = require('feathers-mongodb');
+const mongo_service = require('feathers-mongodb');
 const memory = require('feathers-memory');
 const handler = require('feathers-errors/handler');
+
+const mongoose = require('mongoose');
+const service = require('feathers-mongoose');
+const MessageModel = require('./models/message');
+const UserModel = require('./models/user');
 
 const mongoClient = require('mongodb').MongoClient;
 
@@ -37,62 +42,18 @@ app.configure(auth({
 
 // app.configure(jwt());
 
-mongoClient.connect('mongodb://localhost:27017/lightfox').then(function(db){
+mongoose.Promise = global.Promise;
 
+mongoose.connect('mongodb://localhost:27017/lightfox');
+
+app.use('/messages', service({Model: MessageModel, lean: true}));
+
+app.use('/users', service({Model: UserModel, lean: true}));
+
+app.use(handler());
+
+const server = app.listen(3000);
     
-    app.use('/users', service({
-            Model: db.collection('users')        
-    }));
-	
-
-	// app.use('/users', memory());
-	
-    app.use('/messages', service({
-            Model: db.collection('messages')
-    }));	
-
-	/*
-	app.configure(local());
-	app.configure(jwt());
-	*/
-         
-
-    /*
-    app.service('auth').hooks({
-        before: { find: [ auth.hooks.authenticate('jwt')],
-        create: [ local.hooks.hashPassword({passwordField: 'password'})] }
-    });
-    */
-	
-	app.use(handler());
-
-	/*
-    app.service('auth').hooks({
-		before: {
-			create: [
-				auth.hooks.authenticate(['jwt','local'])
-			],
-			remove: [
-				auth.hooks.authenticate('jwt')
-			]
-		},
-	});
-	
-    */
-
-    /*
-    app.service('users').create({
-        email: 'kurosouza@gmail.com',
-        password: 'admin'
-    });
-	*/
-    
-    const server = app.listen(3000);
-    
-    server.on('listening', function(){
-        console.log("Lightfox service started");        
-    });
-    
-}).catch(function(error){
-    console.error(error);   
+server.on('listening', function(){
+	console.log("Lightfox service started");        
 });
