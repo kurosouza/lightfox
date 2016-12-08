@@ -11,8 +11,20 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "feathers": "^2.0.2",
+    "feathers-authentication": "^0.7.12",
+    "feathers-authentication-jwt": "^0.2.0",
+    "feathers-authentication-local": "^0.3.0",
     "feathers-hooks": "^1.7.0",
+    "feathers-memory": "^1.0.1",
+    "feathers-mongodb": "^2.6.0",
+    "feathers-mongoose": "^3.6.1",
     "feathers-rest": "^1.5.2",
-    "feathers-socketio": "^1.4.2"
+    "feathers-socketio": "^1.4.2",
+    "mongodb": "^2.2.12",
+    "mongoose": "^4.7.2",
+    "passport-local": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node ./server"
   }
 }
