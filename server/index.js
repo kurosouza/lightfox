@@ -16,6 +16,7 @@ const mongoose = require('mongoose');
 const service = require('feathers-mongoose');
 const MessageModel = require('./models/message');
 const UserModel = require('./models/user');
+const authHooks = require('./hooks/auth-hooks');
 
 const mongoClient = require('mongodb').MongoClient;
 
@@ -46,12 +47,19 @@ app.use('/messages', service({Model: MessageModel, lean: true}));
 
 app.use('/users', service({Model: UserModel, lean: true}));
 
+const userService = app.service('users');
+
+userService.before(authHooks.before);
+userService.after(authHooks.after);
+
 app.use(handler());
 
+/*
 app.service('users').create({
 	email: 'kurosouza@gmail.com',
 	password: 'admin'
 });
+*/
 
 const server = app.listen(3000);
     
