@@ -26,15 +26,11 @@ app.configure(hooks());
 app.configure(rest());
 app.configure(socketio());
 
-
 app.configure(auth({
-		idField: '_id',
-		secret: 'supersecret',
-		tokenEndpoint: '/token',
-		localEndpoint: '/login',
-		header: 'X-Authorization',		
-		service: 'users'
-		
+		token: {
+			secret: 'supersecret',
+		},
+		local: {},	
 }));
 
 
@@ -51,6 +47,11 @@ app.use('/messages', service({Model: MessageModel, lean: true}));
 app.use('/users', service({Model: UserModel, lean: true}));
 
 app.use(handler());
+
+app.service('users').create({
+	email: 'kurosouza@gmail.com',
+	password: 'admin'
+});
 
 const server = app.listen(3000);
     
