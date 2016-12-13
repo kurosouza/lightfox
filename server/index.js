@@ -35,11 +35,6 @@ app.configure(auth({
 		local: {},	
 }));
 
-
-// app.configure(local());
-
-// app.configure(jwt());
-
 mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://localhost:27017/lightfox');
@@ -57,13 +52,6 @@ const messageService = app.service('messages');
 messageService.before(messageHooks.before);
 
 app.use(handler());
-
-/*
-app.service('users').create({
-	email: 'kurosouza@gmail.com',
-	password: 'admin'
-});
-*/
 
 const server = app.listen(3000);
     

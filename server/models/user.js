@@ -14,7 +14,14 @@ const UserSchema = new Schema({
 	password: {
 		type:String,
 		required: true,
+	},
+
+	screen_name: {
+		type: String,
+		required: true,
 	}
+
+	
 
 });
 
