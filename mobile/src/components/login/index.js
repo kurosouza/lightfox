@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import {View,Text} from 'react-native';
 
 import {Icon, Image, InputGroup, Container, Header, Content, Input, Button} from 'native-base';
-// import Icon from 'react-native-vector-icons/FontAwesome'
 import styles from './styles';
 
 class Login extends Component {
@@ -20,7 +19,7 @@ class Login extends Component {
 	render() {
 		return (
 			<Container style={styles.container}>
-				<Header><Text>Login</Text></Header>
+				<Header><Text style={styles.title}>Login</Text></Header>
 				<Content>
 					<InputGroup style={styles.input}>
 						<Icon name='md-person' size={30} />

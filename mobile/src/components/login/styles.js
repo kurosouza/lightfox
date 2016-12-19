@@ -12,6 +12,12 @@ const styles = StyleSheet.create({
 			flexDirection: 'column',
 		},
 
+	title: {
+		color: '#fff',
+		fontSize: 22,
+		fontWeight: 'bold',
+	},
+
 	input: {
 		margin: 10,
 		marginBottom: 20,
