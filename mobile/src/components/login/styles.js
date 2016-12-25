@@ -26,7 +26,21 @@ const styles = StyleSheet.create({
 	btn: {
 		alignSelf: 'stretch',
 		margin: 10	
-	}	
+	},	
+	
+	logo: {
+		marginTop: 50,
+		marginBottom: 20,
+		alignSelf: 'center',
+	},
+	
+	actions_pane: {
+		flexDirection: 'row',
+		margin: 10,
+		marginTop: 20,
+		justifyContent: 'space-between',
+		
+	}
 
 });
 
