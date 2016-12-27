@@ -31,16 +31,20 @@ class Login extends Component {
 					<InputGroup style={styles.input}>
 						<Icon name='md-lock' size={30} />
 						<Input placeholder="Password" secureTextEntry />
-					</InputGroup>
-					<View style={styles.actions_pane}>
-						<TouchableOpacity >
-							<Text>SIGN IN</Text>
-						</TouchableOpacity>
-						<TouchableOpacity>
-							<Text>CREATE ACCOUNT</Text>
-						</TouchableOpacity>
-					</View>
-					<Button block style={styles.btn}>Login</Button>
+					</InputGroup>					
+
+					<Button block success capitalize style={styles.btn}>
+						<Icon name='md-browsers' />
+						sign in
+					</Button>
+
+					<Text style={{alignSelf: 'center', color: 'darkgray', marginTop:10, marginBottom: 10}}>OR</Text>				
+
+					<Button block info capitalize style={styles.btn}>
+						<Icon name='md-add-circle' />
+						create new account
+					</Button>
+					
 				</Content>
 			</Container>
 		);
