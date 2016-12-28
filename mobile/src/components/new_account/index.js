@@ -9,6 +9,7 @@ import autobind from 'autobind-decorator';
 import styles from '../login/styles';
 
 const t = require('tcomb-validation');
+const validate = t.validate;
 
 const logo = require('../../../img/user-6.png');
 
@@ -33,27 +34,39 @@ class NewAccount extends Component {
 
 	@autobind
 	screenNameChanged(screen_name){
-
+		this.setState({screen_name: screen_name});
 	}
 
 	@autobind
 	emailChanged(email) {
-
+		this.setState({email: email});
 	}
 
 	@autobind
 	passwordChanged(password) {
-
+		this.setState({password: password});
 	}
 
 	@autobind
-	cpasswordChanged(password) {
-		
+	cpasswordChanged(cpassword) {
+		this.setState({cpassword: cpassword});
 	}
 
 	@autobind
 	back() {
 		Actions.pop();
+	}
+
+	@autobind
+	createAccountAction() {
+		// validate form fields here
+		let result = validate(this.state, newAccountModel);
+		if(result.isValid()) {
+			// inputs valid. proceeed
+		} else {
+			// display validation errors
+			this.setState({validationMessage: result.firstError().message});
+		}
 	}
 
 	render() {
@@ -89,7 +102,7 @@ class NewAccount extends Component {
 							<Input placeholder="Confirm password" secureTextEntry value={this.state.cpassword} onChangeText={this.cpasswordChanged}/>
 						</InputGroup>
 
-						<Button block info capitalize style={styles.btn}>
+						<Button block info capitalize style={styles.btn} onPress={this.createAccountAction}>
 							<Icon name='md-person-add'/>
 							create account
 						</Button>
