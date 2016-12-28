@@ -40,6 +40,14 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		justifyContent: 'space-between',
 		
+	},
+
+	validation_message: {
+		color: 'red',
+		fontWeight: 'bold',
+		fontSize: 15,
+		margin:10,
+		alignSelf: 'center'
 	}
 
 });
