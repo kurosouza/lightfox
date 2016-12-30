@@ -2,23 +2,73 @@
 'use strict'
 
 import React, {Component} from 'react';
+import {AsyncStorage} from 'react-native';
 import {Router, Scene} from 'react-native-mobx';
 import store from './stores/MessageStore';
 import Login from './components/login';
 import NewAccount from './components/new_account';
+import Offline from './components/offline';
+import Home from './components/home';
 
+import feathers from 'feathers/client';
+
+import rest from 'feathers-rest/client'
+import superagent from 'superagent';
+
+import hooks from 'feathers-hooks';
+import socketio from 'feathers-socketio/client';
+import authentication from 'feathers-authentication-client';
+
+if(window.navigator && Object.keys(window.navigator).length == 0) {
+	window = Object.assign(window, { navigator: { userAgent: 'ReactNative'}});
+}
+
+var io = require('socket.io-client');
 
 class Application extends Component {
 	constructor() {
 		super();
+
+		const options = { transports: ['websocket'], forceNew: true};
+		const socket = io('http://localhost:3000/', options);
+
+		this.state = { connected: false };
+
+		this.app = feathers()
+			.configure(socketio(socket))
+			.configure(hooks)
+			// .configure(rest('http://localhost:3000').superagent(superagent))
+			.configure(authentication({
+					storage: AsyncStorage,
+			}));
+	}
+
+	componentDidMount() {
+		this.setState({ loading: true });
+
+		this.app.io.on('connect', () => {
+			this.setState({connected: true});
+
+			this.app.authenticate().then(() => {
+				this.setState({ loading: false });
+				Actions.main();
+			}).catch(error => {
+				this.setState({ loading: false });
+				Actions.login();
+			});
+
+			
+		});
 	}
 
 	render() {
 		return (
 			<Router store={store}>
 				<Scene key='root'>
-					<Scene key='login' component={Login} initial={true} hideNavBar={true} store={store} />
+					<Scene key='login' component={Login} initial={true} hideNavBar={true} store={store} app={this.app}/>
 					<Scene key='createAccount' component={NewAccount} hideNavBar={true} store={store} />
+					<Scene key='offline' component={Offline} hideNavBar={true} store={store} />
+					<Scene key='home' component={Home} hideNavBar={false} store={store} />
 				</Scene>
 			</Router>
 		);

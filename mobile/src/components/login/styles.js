@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 	},
 
+	screen_title: {
+		color: '#3083C9',
+		fontSize: 24,
+		fontWeight: 'bold',		
+	},
+
 	input: {
 		margin: 10,
 		marginBottom: 20,
