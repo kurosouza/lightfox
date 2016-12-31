@@ -32,16 +32,18 @@ app.configure(auth({
 		token: {
 			secret: 'supersecret',
 		},
-		local: {},	
+		local: {
+			
+		},	
 }));
 
 mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://localhost:27017/lightfox');
 
-app.use('/messages', service({Model: MessageModel, lean: true}));
+app.use('/messages', service({Model: MessageModel}));
 
-app.use('/users', service({Model: UserModel, lean: true}));
+app.use('/users', service({Model: UserModel}));
 
 const userService = app.service('users');
 

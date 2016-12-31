@@ -61,6 +61,22 @@ class Login extends Component {
 			// continue sign in ..			
 			console.log('validation ok. signing in ..');
 			this.setState({validationMessage: ''});
+
+			this.app.authenticate({
+				strategy: 'local',
+				username: this.state.email,
+				password: this.state.password,
+			}).then(response => {
+				console.log('authenticated user: ', response);
+				this.app.passport.verifyJWT(response.accessToken);
+			}).then( payload => {
+				console.log('JWT payload: ', payload);
+				return this.app.service('users').get(payload.userId);
+			}).catch(error => {
+				console.error('Authentication error', error);
+				
+			});
+			
 		} else {
 			// validation error ..
 			console.log('validation error:' + result.firstError().message );

@@ -47,17 +47,24 @@ class Application extends Component {
 		this.setState({ loading: true });
 
 		this.app.io.on('connect', () => {
+			console.log('application connected ..');
 			this.setState({connected: true});
 
 			this.app.authenticate().then(() => {
+				console.log('user authenticated.');
 				this.setState({ loading: false });
 				Actions.main();
 			}).catch(error => {
+				console.log('authentication failed. redirecting to login ..');
 				this.setState({ loading: false });
 				Actions.login();
 			});
-
 			
+		});
+
+		this.app.io.on('disconnect', () => {
+			this.setState({connected: false});
+			Actions.offline();
 		});
 	}
 
