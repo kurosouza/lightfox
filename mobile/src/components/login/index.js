@@ -64,7 +64,7 @@ class Login extends Component {
 
 			this.app.authenticate({
 				strategy: 'local',
-				username: this.state.email,
+				email: this.state.email,
 				password: this.state.password,
 			}).then(response => {
 				console.log('authenticated user: ', response);

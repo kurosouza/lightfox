@@ -8,8 +8,6 @@ const auth = require('feathers-authentication');
 const local = require('feathers-authentication-local');
 const jwt = require('feathers-authentication-jwt');
 const bodyParser = require('body-parser');
-const mongo_service = require('feathers-mongodb');
-const memory = require('feathers-memory');
 const handler = require('feathers-errors/handler');
 
 const mongoose = require('mongoose');
@@ -19,8 +17,6 @@ const UserModel = require('./models/user');
 const authHooks = require('./hooks/auth-hooks');
 const messageHooks = require('./models/message-hooks');
 
-const mongoClient = require('mongodb').MongoClient;
-
 const app = feathers();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
@@ -28,25 +24,19 @@ app.configure(hooks());
 app.configure(rest());
 app.configure(socketio());
 
-app.configure(auth({
-		token: {
-			secret: 'supersecret',
-		},
-		local: {
-			
-		},	
-}));
+app.configure(auth({token: {secret: 'supersecret' }, local: { usernameField: 'email'}}));
 
 mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://localhost:27017/lightfox');
 
-app.use('/messages', service({Model: MessageModel}));
+app.use('/messages', service({Model: MessageModel, lean: true}));
 
-app.use('/users', service({Model: UserModel}));
+app.use('/users', service({Model: UserModel, lean: true}));
 
 const userService = app.service('users');
 
+// app.configure(local());
 userService.before(authHooks.before);
 userService.after(authHooks.after);
 

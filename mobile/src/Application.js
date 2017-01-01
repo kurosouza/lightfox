@@ -1,9 +1,8 @@
-
 'use strict'
 
 import React, {Component} from 'react';
 import {AsyncStorage} from 'react-native';
-import {Router, Scene} from 'react-native-mobx';
+import {Router, Scene, Actions} from 'react-native-mobx';
 import store from './stores/MessageStore';
 import Login from './components/login';
 import NewAccount from './components/new_account';
@@ -30,7 +29,7 @@ class Application extends Component {
 		super();
 
 		const options = { transports: ['websocket'], forceNew: true};
-		const socket = io('http://localhost:3000/', options);
+		const socket = io('http://10.0.2.2:3000/', options);
 
 		this.state = { connected: false };
 
