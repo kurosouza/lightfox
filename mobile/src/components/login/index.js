@@ -51,7 +51,7 @@ class Login extends Component {
 
 	@autobind
 	signInAction() {
-		var signInInfo = {
+		let signInInfo = {
 			email: this.state.email,
 			password: this.state.password,
 		};
@@ -62,17 +62,27 @@ class Login extends Component {
 			console.log('validation ok. signing in ..');
 			this.setState({validationMessage: ''});
 
+			console.log('Application instance: ',this.app);
+			
 			this.app.authenticate({
-				strategy: 'local',
-				email: this.state.email,
-				password: this.state.password,
-			}).then(response => {
+				type: 'local',
+				email: signInInfo.email,
+				password: signInInfo.password,
+			}) // .resolve()
+			/*
+			 .then(function(response) {
 				console.log('authenticated user: ', response);
 				this.app.passport.verifyJWT(response.accessToken);
-			}).then( payload => {
+			}) 
+			.then( function(payload) {
 				console.log('JWT payload: ', payload);
 				return this.app.service('users').get(payload.userId);
-			}).catch(error => {
+			})
+			* */
+			.then(response => {
+				console.log('Login completed: ' + response);
+			})
+			.catch(error => {
 				console.error('Authentication error', error);
 				
 			});

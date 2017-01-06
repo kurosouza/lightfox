@@ -29,14 +29,14 @@ class Application extends Component {
 		super();
 
 		const options = { transports: ['websocket'], forceNew: true};
-		const socket = io('http://10.0.2.2:3000/', options);
+		const socket = io('http://10.0.2.2:3000', options);
 
 		this.state = { connected: false };
 
 		this.app = feathers()
 			.configure(socketio(socket))
 			.configure(hooks)
-			// .configure(rest('http://localhost:3000').superagent(superagent))
+			// .configure(rest('http://10.0.2.2:3000').superagent(superagent))
 			.configure(authentication({
 					storage: AsyncStorage,
 			}));
@@ -45,6 +45,7 @@ class Application extends Component {
 	componentDidMount() {
 		this.setState({ loading: true });
 
+		
 		this.app.io.on('connect', () => {
 			console.log('application connected ..');
 			this.setState({connected: true});
@@ -60,6 +61,7 @@ class Application extends Component {
 			});
 			
 		});
+		
 
 		this.app.io.on('disconnect', () => {
 			this.setState({connected: false});
