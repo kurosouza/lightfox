@@ -35,7 +35,7 @@ class Application extends Component {
 
 		this.app = feathers()
 			.configure(socketio(socket))
-			.configure(hooks)
+			.configure(hooks())
 			// .configure(rest('http://10.0.2.2:3000').superagent(superagent))
 			.configure(authentication({
 					storage: AsyncStorage,
@@ -50,6 +50,7 @@ class Application extends Component {
 			console.log('application connected ..');
 			this.setState({connected: true});
 
+			/*
 			this.app.authenticate().then(() => {
 				console.log('user authenticated.');
 				this.setState({ loading: false });
@@ -59,7 +60,7 @@ class Application extends Component {
 				this.setState({ loading: false });
 				Actions.login();
 			});
-			
+			*/
 		});
 		
 
@@ -74,7 +75,7 @@ class Application extends Component {
 			<Router store={store}>
 				<Scene key='root'>
 					<Scene key='login' component={Login} initial={true} hideNavBar={true} store={store} app={this.app}/>
-					<Scene key='createAccount' component={NewAccount} hideNavBar={true} store={store} />
+					<Scene key='createAccount' component={NewAccount} hideNavBar={true} store={store} app={this.app} />
 					<Scene key='offline' component={Offline} hideNavBar={true} store={store} />
 					<Scene key='home' component={Home} hideNavBar={false} store={store} />
 				</Scene>

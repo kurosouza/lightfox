@@ -30,6 +30,7 @@ class NewAccount extends Component {
 
 	componentDidMount() {
 		this.store = this.props.store;
+		this.app = this.props.app;
 	}
 
 	@autobind
@@ -62,7 +63,16 @@ class NewAccount extends Component {
 		// validate form fields here
 		let result = validate(this.state, newAccountModel);
 		if(result.isValid()) {
-			// inputs valid. proceeed
+			// inputs valid. proceed
+			let userService = this.app.service('users');
+
+			userService.create({
+				email: this.state.email,
+				password: this.state.password,
+				screen_name: this.state.screen_name,
+			}).then(() => {
+				console.log('user ' + this.state.email + ' created successfully.');				
+			});
 		} else {
 			// display validation errors
 			this.setState({validationMessage: result.firstError().message});
