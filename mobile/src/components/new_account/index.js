@@ -5,6 +5,7 @@ import {View, ScrollView, Text} from 'react-native';
 import {Container, Header, Title, Content, Thumbnail, Input, InputGroup, Icon, Button} from 'native-base';
 import {Actions} from 'react-native-mobx';
 import autobind from 'autobind-decorator';
+import 'babel-polyfill';
 
 import styles from '../login/styles';
 
@@ -69,9 +70,25 @@ class NewAccount extends Component {
 			userService.create({
 				email: this.state.email,
 				password: this.state.password,
-				screen_name: this.state.screen_name,
+				screen_name: this.state.screen_name,				
 			}).then(() => {
-				console.log('user ' + this.state.email + ' created successfully.');				
+				console.log('user ' + this.state.email + ' created successfully.');
+				this.app.authenticate({
+					endpoint: '/auth/local',
+					strategy: 'local',
+					email: this.state.email,
+					password: this.state.password,
+					
+				}).then((result) => {
+					console.log('Authentication successful: ' + result);
+					Actions.home();
+				}).catch((e) => {
+					console.log('Post-registration authentication failed: ' + e);
+					this.setState({validationMessage: 'PRA failure: ' + e});
+				});
+			}).catch((error) => {
+				console.log('Error creating account: ' + error);
+				this.setState({validationMessage: 'Could not create account: ' + error});
 			});
 		} else {
 			// display validation errors

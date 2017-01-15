@@ -1,5 +1,6 @@
 'use strict';
 
+
 import React, {Component} from 'react';
 import {AsyncStorage} from 'react-native';
 import {Router, Scene, Actions} from 'react-native-mobx';
@@ -9,6 +10,7 @@ import NewAccount from './components/new_account';
 import Offline from './components/offline';
 import Home from './components/home';
 
+import 'babel-polyfill';
 import feathers from 'feathers/client';
 
 import rest from 'feathers-rest/client'
@@ -61,8 +63,7 @@ class Application extends Component {
 				Actions.login();
 			});
 			*/
-		});
-		
+		});		
 
 		this.app.io.on('disconnect', () => {
 			this.setState({connected: false});
@@ -74,10 +75,10 @@ class Application extends Component {
 		return (
 			<Router store={store}>
 				<Scene key='root'>
-					<Scene key='login' component={Login} initial={true} hideNavBar={true} store={store} app={this.app}/>
-					<Scene key='createAccount' component={NewAccount} hideNavBar={true} store={store} app={this.app} />
-					<Scene key='offline' component={Offline} hideNavBar={true} store={store} />
-					<Scene key='home' component={Home} hideNavBar={false} store={store} />
+					<Scene key='login' component={Login} initial={true} hideNavBar={true} app={this.app}/>
+					<Scene key='createAccount' component={NewAccount} hideNavBar={true} app={this.app} />
+					<Scene key='offline' component={Offline} hideNavBar={true} app={this.app}/>
+					<Scene key='home' component={Home} hideNavBar={false} app={this.app}/>
 				</Scene>
 			</Router>
 		);

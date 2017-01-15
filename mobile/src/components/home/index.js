@@ -14,6 +14,7 @@ class Home extends Component {
 
 	componentDidMount() {
 		this.store = this.props.store;
+		this.app = this.props.app;
 	}
 
 	render() {

@@ -5,6 +5,8 @@ import {View,Text, TouchableOpacity, ScrollView} from 'react-native';
 import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-mobx';
 
+import 'babel-polyfill';
+
 import {Icon, Image, InputGroup, Container, Header, Title, Content, Input, Button, Thumbnail} from 'native-base';
 import styles from './styles';
 
@@ -62,29 +64,20 @@ class Login extends Component {
 			console.log('validation ok. signing in ..');
 			this.setState({validationMessage: ''});
 
-			console.log('Application instance: ',this.app);
+			// console.log('Application instance: ',this.app);
 			
 			this.app.authenticate({
-				type: 'local',
+				strategy: 'token',
+				endpoint: '/auth/local',
 				email: signInInfo.email,
 				password: signInInfo.password,
-			}) // .resolve()
-			/*
-			 .then(function(response) {
-				console.log('authenticated user: ', response);
-				this.app.passport.verifyJWT(response.accessToken);
-			}) 
-			.then( function(payload) {
-				console.log('JWT payload: ', payload);
-				return this.app.service('users').get(payload.userId);
 			})
-			* */
-			.then(response => {
+			.then((response) => {
 				console.log('Login completed: ' + response);
+				Actions.home();
 			})
 			.catch(error => {
-				console.error('Authentication error', error);
-				
+				console.error('Authentication error', error);				
 			});
 			
 		} else {
