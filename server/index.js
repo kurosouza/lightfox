@@ -25,6 +25,8 @@ app.configure(rest());
 app.configure(socketio());
 
 app.configure(auth({token: {secret: 'supersecret' }, local: { usernameField: 'email'}}));
+app.configure(local());
+app.configure(jwt());
 
 mongoose.Promise = global.Promise;
 

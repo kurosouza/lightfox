@@ -11,7 +11,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "feathers": "^2.0.2",
-    "feathers-authentication": "^0.7.12",
+    "feathers-authentication": "1.0.2",
     "feathers-authentication-jwt": "^0.2.0",
     "feathers-authentication-local": "^0.3.0",
     "feathers-hooks": "^1.7.0",

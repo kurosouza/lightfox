@@ -5,8 +5,6 @@ import {View,Text, TouchableOpacity, ScrollView} from 'react-native';
 import autobind from 'autobind-decorator';
 import {Actions} from 'react-native-mobx';
 
-import 'babel-polyfill';
-
 import {Icon, Image, InputGroup, Container, Header, Title, Content, Input, Button, Thumbnail} from 'native-base';
 import styles from './styles';
 

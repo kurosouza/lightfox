@@ -5,7 +5,6 @@ import {View, ScrollView, Text} from 'react-native';
 import {Container, Header, Title, Content, Thumbnail, Input, InputGroup, Icon, Button} from 'native-base';
 import {Actions} from 'react-native-mobx';
 import autobind from 'autobind-decorator';
-import 'babel-polyfill';
 
 import styles from '../login/styles';
 
