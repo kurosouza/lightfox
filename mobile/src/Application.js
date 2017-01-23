@@ -18,7 +18,7 @@ import superagent from 'superagent';
 
 import hooks from 'feathers-hooks';
 import socketio from 'feathers-socketio/client';
-import authentication from 'feathers-authentication-client';
+import authentication from 'feathers-authentication/client';
 
 if(window.navigator && Object.keys(window.navigator).length == 0) {
 	window = Object.assign(window, { navigator: { userAgent: 'ReactNative'}});
@@ -46,7 +46,6 @@ class Application extends Component {
 
 	componentDidMount() {
 		this.setState({ loading: true });
-
 		
 		this.app.io.on('connect', () => {
 			console.log('application connected ..');

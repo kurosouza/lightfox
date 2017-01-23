@@ -15,6 +15,7 @@ const service = require('feathers-mongoose');
 const MessageModel = require('./models/message');
 const UserModel = require('./models/user');
 const authHooks = require('./hooks/auth-hooks');
+// const authHooks2 = require('./hooks/auth-hooks-2');
 const messageHooks = require('./models/message-hooks');
 
 const app = feathers();
@@ -24,9 +25,9 @@ app.configure(hooks());
 app.configure(rest());
 app.configure(socketio());
 
-app.configure(auth({token: {secret: 'supersecret' }, local: { usernameField: 'email'}}));
-app.configure(local());
-app.configure(jwt());
+app.configure(auth({secret: 'supersecret', usernameField: 'email'}));
+// app.configure(local());
+// app.configure(jwt());
 
 mongoose.Promise = global.Promise;
 
@@ -38,7 +39,6 @@ app.use('/users', service({Model: UserModel, lean: true}));
 
 const userService = app.service('users');
 
-// app.configure(local());
 userService.before(authHooks.before);
 userService.after(authHooks.after);
 

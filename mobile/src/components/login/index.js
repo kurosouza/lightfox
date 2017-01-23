@@ -65,8 +65,8 @@ class Login extends Component {
 			// console.log('Application instance: ',this.app);
 			
 			this.app.authenticate({
-				strategy: 'token',
-				endpoint: '/auth/local',
+				type: 'local',
+				// endpoint: '/auth/local',
 				email: signInInfo.email,
 				password: signInInfo.password,
 			})
@@ -75,7 +75,8 @@ class Login extends Component {
 				Actions.home();
 			})
 			.catch(error => {
-				console.error('Authentication error', error);				
+				console.log('Authentication error', error);
+				this.setState({validationMessage: 'Authentication failed: Invalid login.'});	
 			});
 			
 		} else {
