@@ -5,8 +5,8 @@ const hooks = require('feathers-hooks');
 const rest = require('feathers-rest');
 const socketio = require('feathers-socketio');
 const auth = require('feathers-authentication');
-const local = require('feathers-authentication-local');
-const jwt = require('feathers-authentication-jwt');
+// const local = require('feathers-authentication-local');
+// const jwt = require('feathers-authentication-jwt');
 const bodyParser = require('body-parser');
 const handler = require('feathers-errors/handler');
 
@@ -15,7 +15,7 @@ const service = require('feathers-mongoose');
 const MessageModel = require('./models/message');
 const UserModel = require('./models/user');
 const authHooks = require('./hooks/auth-hooks');
-// const authHooks2 = require('./hooks/auth-hooks-2');
+
 const messageHooks = require('./models/message-hooks');
 
 const app = feathers();
